@@ -1,4 +1,3 @@
-// Load environment variables from .env file before anything else
 require("dotenv").config();
 
 const express = require("express");
@@ -8,10 +7,8 @@ const schedulerRoutes = require("./routes/scheduler");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ── Middleware ────────────────────────────────────────────────────────────────
 app.use(express.json());
 
-// Log every incoming request to the test server
 app.use(async (req, res, next) => {
   await Log(
     "backend",
@@ -22,15 +19,12 @@ app.use(async (req, res, next) => {
   next();
 });
 
-// ── Routes ────────────────────────────────────────────────────────────────────
 app.use("/", schedulerRoutes);
 
-// ── Health check ──────────────────────────────────────────────────────────────
 app.get("/health", (req, res) => {
-  res.status(200).json({ status: "ok", service: "vehicle-maintenance-scheduler" });
+  res.status(200).json({ status: "ok", service: "vehicle-maintenance-scheduler-backend" });
 });
 
-// ── Start server ──────────────────────────────────────────────────────────────
 app.listen(PORT, async () => {
   await Log("backend", "info", "service", `Vehicle scheduler service started on port ${PORT}`);
   console.log(`Server running at http://localhost:${PORT}`);
