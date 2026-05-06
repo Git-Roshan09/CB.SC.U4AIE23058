@@ -23,7 +23,6 @@ async function Log(stack, level, packageName, message) {
     return response.data;
   } 
   catch (error) {
-    console.error("[LogMiddleware] Failed to send log:", error.message);
   }
 }
 
